@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💸FunPay Black~ørange💸</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #ff9a00, #ff5e00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(255, 94, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .wheel-section {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+        
+        .lottery-section {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #ff9a00;
+            border-bottom: 2px solid rgba(255, 154, 0, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .prizes-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .prizes-list li {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #ff9a00;
+        }
+        
+        .button {
+            display: inline-block;
+            background: linear-gradient(to right, #ff9a00, #ff5e00);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 94, 0, 0.4);
+            margin: 10px 0;
+            width: 100%;
+        }
+        
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 94, 0, 0.6);
+        }
+        
+        .button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .button.secondary {
+            background: linear-gradient(to right, #3498db, #2980b9);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .button.game {
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+        
+        .wheel-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 20px auto 30px;
+        }
+        
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            border: 10px solid rgba(255, 255, 255, 0.1);
+            transition: transform 4s cubic-bezier(0.2, 0.8, 0.3, 1);
+            box-shadow: 0 0 0 10px rgba(255, 154, 0, 0.2);
+        }
+        
+        .wheel-item {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: bottom right;
+            left: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            overflow: hidden;
+        }
+        
+        .wheel-center {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(to right, #ff9a00, #ff5e00);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(255, 94, 0, 0.7);
+            border: 5px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .arrow {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            z-index: 20;
+            color: #ff9a00;
+            font-size: 40px;
+        }
+        
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 154, 0, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 154, 0, 0.3);
+            font-size: 1.2rem;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .info-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .lottery-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .ticket-count {
+            font-weight: bold;
+            color: #ff9a00;
+        }
+        
+        .payment-details {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        
+        .admin-button-container {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .admin-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .admin-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .footer-links a {
+            color: #ff9a00;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .telegram-icon {
+            width: 20px;
+            height: 20px;
+            filter: invert(1);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: #1a1a2e;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 154, 0, 0.3);
+        }
+        
+        .close-modal {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+            color: #ff9a00;
+        }
+        
+        .admin-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .admin-input {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .admin-btn {
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(to right, #ff9a00, #ff5e00);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 94, 0, 0.4);
+        }
+        
+        .admin-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff9a00;
+            margin-top: 5px;
+        }
+        
+        .password-modal {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .password-content {
+            background: #1a1a2e;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            border: 2px solid rgba(255, 154, 0, 0.5);
+        }
+        
+        /* Стили для игры */
+        .game-container {
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .game-wrapper {
+            display: inline-block;
+            position: relative;
+            margin-top: 20px;
+        }
+        
+        #game-canvas {
+            border: 3px solid #ff9a00;
+            border-radius: 10px;
+            background: #0c1427;
+            display: block;
+        }
+        
+        .game-info {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .game-score {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .game-high-score {
+            color: #ff9a00;
+            font-weight: bold;
+        }
+        
+        .game-instructions {
+            margin-top: 15px;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .wheel-container {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .admin-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            #game-canvas {
+                width: 100%;
+                max-width: 500px;
+                height: auto;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💸FunPay Black~ørange💸</h1>
+            <p class="subtitle">Эксклюзивные материалы и розыгрыши для подписчиков Telegram-канала</p>
+        </header>
+        
+        <div class="main-content">
+            <!-- Секция рулетки -->
+            <div class="section wheel-section">
+                <h2><i class="fas fa-dice"></i> Ежедневная рулетка</h2>
+                <p>Крутите рулетку раз в день и выигрывайте эксклюзивные материалы!</p>
+                
+                <div class="wheel-container">
+                    <div class="arrow">▼</div>
+                    <div class="wheel" id="wheel">
+                        <!-- Секции рулетки будут добавлены через JS -->
+                    </div>
+                    <div class="wheel-center"></div>
+                </div>
+                
+                <div class="result" id="result">
+                    Нажмите кнопку ниже, чтобы крутить рулетку
+                </div>
+                
+                <div class="info-box">
+                    <p><i class="fas fa-info-circle"></i> Возможные призы:</p>
+                    <ul class="prizes-list" id="prizes-list">
+                        <!-- Список призов будет добавлен через JS -->
+                    </ul>
+                </div>
+                
+                <button class="button" id="spin-button" disabled>ВСТУПИ В ТЕЛЕГРАММ КАНАЛ ЧТОБЫ КРУТИТЬ</button>
+                <a href="https://t.me/+Yp8emnrgPJIzMDMx" class="button secondary" target="_blank">
+                    <i class="fab fa-telegram"></i> ПЕРЕЙТИ В ТЕЛЕГРАМ КАНАЛ
+                </a>
+            </div>
+            
+            <!-- Секция лотереи -->
+            <div class="section lottery-section">
+                <h2><i class="fas fa-ticket-alt"></i> Розыгрыш приватки</h2>
+                <p>Всего 100 билетов. Раз в неделю разыгрываем приватку. 1 билет = 10 рублей.</p>
+                
+                <div class="lottery-info">
+                    <div>Куплено билетов:</div>
+                    <div class="ticket-count" id="tickets-count">0/100</div>
+                </div>
+                
+                <div class="info-box">
+                    <p><i class="fas fa-crown"></i> Правила: Кто больше купит билетов, тот получает приватку. При покупке всех 100 билетов - автоматическая победа!</p>
+                </div>
+                
+                <div class="payment-details">
+                    <p><strong>Реквизиты для оплаты доступны в Telegram</strong></p>
+                    <p>Напишите @AleshaPopovlch в Telegram для получения реквизитов</p>
+                </div>
+                
+                <a href="https://t.me/AleshaPopovlch" class="button secondary" target="_blank">
+                    <i class="fab fa-telegram"></i> КУПИТЬ БИЛЕТ В ТЕЛЕГРАМ
+                </a>
+                
+                <div class="info-box">
+                    <p><i class="fas fa-lock"></i> Приватка за 10 рублей вместо 199 рублей!</p>
+                    <p>Вы видите только общее количество купленных билетов, но не кто сколько купил.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Игра Динозаврик -->
+        <div class="game-container">
+            <h2><i class="fas fa-gamepad"></i> Мини-игра "Динозаврик"</h2>
+            <p>Нажмите пробел или кликните на экран, чтобы прыгать через кактусы!</p>
+            
+            <div class="game-wrapper">
+                <canvas id="game-canvas" width="800" height="300"></canvas>
+            </div>
+            
+            <div class="game-info">
+                <div>Счет: <span class="game-score" id="score">0</span></div>
+                <div>Рекорд: <span class="game-high-score" id="high-score">0</span></div>
+            </div>
+            
+            <div class="game-instructions">
+                <p><i class="fas fa-info-circle"></i> Управление: ПРОБЕЛ (ПК) или КАСАНИЕ (телефон)</p>
+            </div>
+            
+            <button class="button game" id="start-game">
+                <i class="fas fa-play"></i> НАЧАТЬ ИГРУ
+            </button>
+        </div>
+        
+        <!-- Кнопка админ-панели -->
+        <div class="admin-button-container">
+            <a href="#" class="admin-button" id="admin-btn">
+                <i class="fas fa-user-shield"></i> Админ-панель
+            </a>
+        </div>
+        
+        <footer>
+            <div class="footer-links">
+                <a href="https://t.me/+_8EdHzv8CnRlMTIx" target="_blank">
+                    <i class="fab fa-telegram telegram-icon"></i> Telegram канал
+                </a>
+                <a href="https://t.me/AleshaPopovlch" target="_blank">
+                    <i class="fas fa-headset"></i> Поддержка по оплате/ошибки: @AleshaPopovlch
+                </a>
+                <a href="https://t.me/MalayaFunPay" target="_blank">
+                    <i class="fas fa-bullhorn"></i> Реклама/сотрудничество: @MalayaFunPay
+                </a>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Модальное окно для ввода пароля -->
+    <div class="password-modal" id="password-modal">
+        <div class="password-content">
+            <h2><i class="fas fa-lock"></i> Вход в админ-панель</h2>
+            <p>Введите пароль для доступа к административной панели</p>
+            <input type="password" id="admin-password-input" class="admin-input" placeholder="Введите пароль" style="width: 100%; margin: 20px 0;">
+            <button class="admin-btn" id="submit-password" style="width: 100%;">ВОЙТИ</button>
+            <p id="password-error" style="color: #ff5252; margin-top: 10px; display: none;">Неверный пароль!</p>
+        </div>
+    </div>
+    
+    <!-- Модальное окно админ панели -->
+    <div class="modal" id="admin-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-admin">&times;</span>
+            <h2><i class="fas fa-user-shield"></i> Админ-панель</h2>
+            
+            <div class="admin-stats">
+                <div class="stat-box">
+                    <p>Вращений сегодня</p>
+                    <div class="stat-value" id="admin-spins-today">0</div>
+                </div>
+                <div class="stat-box">
+                    <p>Всего вращений</p>
+                    <div class="stat-value" id="admin-total-spins">0</div>
+                </div>
+                <div class="stat-box">
+                    <p>Куплено билетов</p>
+                    <div class="stat-value" id="admin-tickets-sold">0</div>
+                </div>
+                <div class="stat-box">
+                    <p>Доступно билетов</p>
+                    <div class="stat-value" id="admin-tickets-available">100</div>
+                </div>
+            </div>
+            
+            <div class="admin-controls">
+                <h3>Управление рулеткой</h3>
+                
+                <div class="info-box">
+                    <p><strong>Текущие призы (5 шт):</strong></p>
+                    <ul id="admin-prizes-list">
+                        <!-- Список призов для админа -->
+                    </ul>
+                </div>
+                
+                <input type="text" id="new-prize-name" class="admin-input" placeholder="Название нового приза">
+                <input type="color" id="new-prize-color" class="admin-input" value="#ff9a00">
+                <button class="admin-btn" id="add-prize-btn">Добавить приз</button>
+                
+                <div style="margin-top: 20px;">
+                    <button class="admin-btn" id="remove-last-prize" style="background: linear-gradient(to right, #ff5252, #d32f2f);">
+                        Удалить последний приз
+                    </button>
+                </div>
+            </div>
+            
+            <div class="admin-controls">
+                <h3>Управление лотереей</h3>
+                
+                <div class="info-box">
+                    <p><strong>Текущее количество проданных билетов:</strong> <span id="current-tickets-display">0</span></p>
+                </div>
+                
+                <input type="number" id="tickets-input" class="admin-input" placeholder="Новое количество билетов (0-100)" min="0" max="100">
+                <button class="admin-btn" id="update-tickets-btn">Обновить количество</button>
+                
+                <div style="margin-top: 20px;">
+                    <button class="admin-btn" id="reset-lottery" style="background: linear-gradient(to right, #ff5252, #d32f2f);">
+                        Сбросить лотерею
+                    </button>
+                </div>
+            </div>
+            
+            <div class="admin-controls">
+                <h3>Статистика и сброс</h3>
+                <button class="admin-btn" id="reset-spins-btn">Сбросить статистику вращений</button>
+                <button class="admin-btn" id="export-data" style="background: linear-gradient(to right, #4CAF50, #2E7D32);">Экспорт данных</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Данные призов для рулетки (только 5 призов)
+        let wheelPrizes = [
+            { name: "1. Способ заработка 2025 год", color: "#FF5252" },
+            { name: "2. 1000 товаров на FunPay", color: "#FF4081" },
+            { name: "3. Способ заработка отзывов", color: "#E040FB" },
+            { name: "4. Плагин 2025 самопис", color: "#7C4DFF" },
+            { name: "5. Программа для удобной продажи на funpay", color: "#536DFE" }
+        ];
+        
+        // Шансы для каждого приза (не показываются пользователям)
+        let wheelChances = [20, 20, 20, 20, 20]; // Равные шансы для 5 призов
+        
+        // Данные лотереи
+        let lotteryData = {
+            totalTickets: 100,
+            soldTickets: 0,
+            ticketPrice: 10
+        };
+        
+        // Статистика вращений
+        let spinStats = {
+            today: 0,
+            total: 0,
+            todayDate: new Date().toDateString()
+        };
+        
+        // Данные пользователя
+        let userData = {
+            hasSubscribed: false,
+            canSpin: false,
+            lastSpinDate: null,
+            ip: "user_ip_placeholder",
+            boughtTickets: 0
+        };
+        
+        // Админ пароль
+        const ADMIN_PASSWORD = "admin13345";
+        
+        // DOM элементы
+        const wheel = document.getElementById('wheel');
+        const spinButton = document.getElementById('spin-button');
+        const resultDiv = document.getElementById('result');
+        const prizesList = document.getElementById('prizes-list');
+        const ticketsCount = document.getElementById('tickets-count');
+        const adminBtn = document.getElementById('admin-btn');
+        const passwordModal = document.getElementById('password-modal');
+        const adminModal = document.getElementById('admin-modal');
+        const adminPasswordInput = document.getElementById('admin-password-input');
+        const submitPasswordBtn = document.getElementById('submit-password');
+        const passwordError = document.getElementById('password-error');
+        const closeAdmin = document.getElementById('close-admin');
+        const adminPrizesList = document.getElementById('admin-prizes-list');
+        const newPrizeName = document.getElementById('new-prize-name');
+        const newPrizeColor = document.getElementById('new-prize-color');
+        const addPrizeBtn = document.getElementById('add-prize-btn');
+        const removeLastPrizeBtn = document.getElementById('remove-last-prize');
+        const ticketsInput = document.getElementById('tickets-input');
+        const updateTicketsBtn = document.getElementById('update-tickets-btn');
+        const currentTicketsDisplay = document.getElementById('current-tickets-display');
+        const adminSpinsToday = document.getElementById('admin-spins-today');
+        const adminTotalSpins = document.getElementById('admin-total-spins');
+        const adminTicketsSold = document.getElementById('admin-tickets-sold');
+        const adminTicketsAvailable = document.getElementById('admin-tickets-available');
+        const resetSpinsBtn = document.getElementById('reset-spins-btn');
+        const resetLotteryBtn = document.getElementById('reset-lottery');
+        const exportDataBtn = document.getElementById('export-data');
+        const startGameBtn = document.getElementById('start-game');
+        const gameCanvas = document.getElementById('game-canvas');
+        const scoreElement = document.getElementById('score');
+        const highScoreElement = document.getElementById('high-score');
+        
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            initWheel();
+            updatePrizesList();
+            loadAllData();
+            checkSubscription();
+            checkIfCanSpin();
+            updateSpinButton();
+            updateAdminStats();
+            initGame();
+        });
+        
+        // Загрузка всех данных
+        function loadAllData() {
+            // Загружаем данные рулетки
+            const savedPrizes = localStorage.getItem('wheelPrizes');
+            if (savedPrizes) {
+                wheelPrizes = JSON.parse(savedPrizes);
+            }
+            
+            const savedChances = localStorage.getItem('wheelChances');
+            if (savedChances) {
+                wheelChances = JSON.parse(savedChances);
+            }
+            
+            // Загружаем данные лотереи
+            const savedLottery = localStorage.getItem('lotteryData');
+            if (savedLottery) {
+                lotteryData = JSON.parse(savedLottery);
+            }
+            
+            // Загружаем статистику вращений
+            const savedStats = localStorage.getItem('spinStats');
+            if (savedStats) {
+                spinStats = JSON.parse(savedStats);
+                
+                // Проверяем, не изменился ли день
+                const today = new Date().toDateString();
+                if (spinStats.todayDate !== today) {
+                    spinStats.today = 0;
+                    spinStats.todayDate = today;
+                    saveSpinStats();
+                }
+            }
+            
+            // Загружаем данные пользователя
+            const savedUser = localStorage.getItem('userData');
+            if (savedUser) {
+                userData = JSON.parse(savedUser);
+            }
+            
+            // Загружаем рекорд игры
+            const savedHighScore = localStorage.getItem('dinoHighScore');
+            if (savedHighScore) {
+                highScoreElement.textContent = savedHighScore;
+            }
+            
+            // Обновляем отображение
+            updateLotteryInfo();
+            initWheel();
+            updatePrizesList();
+        }
+        
+        // Сохранение всех данных
+        function saveAllData() {
+            localStorage.setItem('wheelPrizes', JSON.stringify(wheelPrizes));
+            localStorage.setItem('wheelChances', JSON.stringify(wheelChances));
+            localStorage.setItem('lotteryData', JSON.stringify(lotteryData));
+            saveSpinStats();
+            localStorage.setItem('userData', JSON.stringify(userData));
+        }
+        
+        // Сохранение статистики вращений
+        function saveSpinStats() {
+            localStorage.setItem('spinStats', JSON.stringify(spinStats));
+        }
+        
+        // Инициализация рулетки
+        function initWheel() {
+            wheel.innerHTML = '';
+            const totalPrizes = wheelPrizes.length;
+            
+            for (let i = 0; i < totalPrizes; i++) {
+                const prize = wheelPrizes[i];
+                const angle = (360 / totalPrizes) * i;
+                
+                const item = document.createElement('div');
+                item.className = 'wheel-item';
+                item.style.transform = `rotate(${angle}deg)`;
+                item.style.backgroundColor = prize.color;
+                item.innerHTML = `<div style="transform: rotate(${45}deg); font-size: 14px;">${prize.name}</div>`;
+                
+                wheel.appendChild(item);
+            }
+        }
+        
+        // Обновление списка призов
+        function updatePrizesList() {
+            prizesList.innerHTML = '';
+            adminPrizesList.innerHTML = '';
+            
+            wheelPrizes.forEach((prize, index) => {
+                // Для пользовательского списка
+                const li = document.createElement('li');
+                li.textContent = prize.name;
+                li.style.borderLeftColor = prize.color;
+                prizesList.appendChild(li);
+                
+                // Для админ панели
+                const adminLi = document.createElement('li');
+                adminLi.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>${index + 1}. ${prize.name}</span>
+                        <span style="background-color: ${prize.color}; width: 20px; height: 20px; border-radius: 4px;"></span>
+                    </div>
+                `;
+                adminPrizesList.appendChild(adminLi);
+            });
+        }
+        
+        // Обновление информации о лотерее
+        function updateLotteryInfo() {
+            ticketsCount.textContent = `${lotteryData.soldTickets}/${lotteryData.totalTickets}`;
+            currentTicketsDisplay.textContent = lotteryData.soldTickets;
+            adminTicketsSold.textContent = lotteryData.soldTickets;
+            adminTicketsAvailable.textContent = lotteryData.totalTickets - lotteryData.soldTickets;
+        }
+        
+        // Обновление статистики в админ-панели
+        function updateAdminStats() {
+            adminSpinsToday.textContent = spinStats.today;
+            adminTotalSpins.textContent = spinStats.total;
+            adminTicketsSold.textContent = lotteryData.soldTickets;
+            adminTicketsAvailable.textContent = lotteryData.totalTickets - lotteryData.soldTickets;
+        }
+        
+        // Проверка подписки пользователя
+        function checkSubscription() {
+            // В реальном проекте здесь должен быть запрос к серверу для проверки подписки
+            const subscribed = localStorage.getItem('subscribed') === 'true';
+            userData.hasSubscribed = subscribed;
+            
+            if (subscribed) {
+                spinButton.textContent = "КРУТИТЬ РУЛЕТКУ";
+                spinButton.disabled = !userData.canSpin;
+            } else {
+                spinButton.textContent = "ВСТУПИ В ТЕЛЕГРАММ КАНАЛ ЧТОБЫ КРУТИТЬ";
+                spinButton.disabled = false;
+            }
+        }
+        
+        // Проверка, может ли пользователь крутить рулетку сегодня
+        function checkIfCanSpin() {
+            const today = new Date().toDateString();
+            const lastSpin = userData.lastSpinDate;
+            
+            // Проверяем, крутил ли пользователь сегодня
+            const hasSpunToday = lastSpin === today;
+            userData.canSpin = !hasSpunToday && userData.hasSubscribed;
+            
+            return userData.canSpin;
+        }
+        
+        // Обновление состояния кнопки рулетки
+        function updateSpinButton() {
+            if (!userData.hasSubscribed) {
+                spinButton.disabled = false;
+                spinButton.onclick = function() {
+                    window.open('https://t.me/+Yp8emnrgPJIzMDMx', '_blank');
+                    localStorage.setItem('subscribed', 'true');
+                    userData.hasSubscribed = true;
+                    checkSubscription();
+                    checkIfCanSpin();
+                    updateSpinButton();
+                    saveAllData();
+                };
+            } else if (!userData.canSpin) {
+                spinButton.disabled = true;
+                spinButton.textContent = "ВЫ УЖЕ КРУТИЛИ РУЛЕТКУ СЕГОДНЯ";
+                spinButton.onclick = null;
+            } else {
+                spinButton.disabled = false;
+                spinButton.textContent = "КРУТИТЬ РУЛЕТКУ";
+                spinButton.onclick = spinWheel;
+            }
+        }
+        
+        // Вращение рулетки
+        function spinWheel() {
+            if (!userData.canSpin) return;
+            
+            // Генерируем случайный приз с учетом шансов
+            let totalChance = wheelChances.reduce((a, b) => a + b, 0);
+            let random = Math.random() * totalChance;
+            let selectedPrizeIndex = 0;
+            
+            for (let i = 0; i < wheelChances.length; i++) {
+                random -= wheelChances[i];
+                if (random <= 0) {
+                    selectedPrizeIndex = i;
+                    break;
+                }
+            }
+            
+            // Вычисляем угол поворота для выбранного приза
+            const totalPrizes = wheelPrizes.length;
+            const prizeAngle = 360 / totalPrizes;
+            const targetAngle = 3600 + (prizeAngle * selectedPrizeIndex) - (prizeAngle / 2);
+            
+            // Анимация вращения
+            wheel.style.transform = `rotate(${targetAngle}deg)`;
+            spinButton.disabled = true;
+            
+            // Показываем результат через 4 секунды
+            setTimeout(() => {
+                const selectedPrize = wheelPrizes[selectedPrizeIndex];
+                resultDiv.innerHTML = `<strong>Поздравляем! Вы выиграли:</strong><br>${selectedPrize.name}`;
+                
+                // Обновляем данные пользователя
+                const today = new Date().toDateString();
+                userData.lastSpinDate = today;
+                userData.canSpin = false;
+                
+                // Обновляем статистику
+                spinStats.today++;
+                spinStats.total++;
+                
+                // Сохраняем все данные
+                saveAllData();
+                
+                // Обновляем отображение
+                updateSpinButton();
+                updateAdminStats();
+                
+            }, 4000);
+        }
+        
+        // Игра Динозаврик
+        let game = {
+            ctx: null,
+            dino: {
+                x: 50,
+                y: 200,
+                width: 40,
+                height: 60,
+                jumping: false,
+                jumpVelocity: 0,
+                jumpStrength: -15,
+                gravity: 0.8
+            },
+            obstacles: [],
+            score: 0,
+            highScore: localStorage.getItem('dinoHighScore') || 0,
+            gameSpeed: 5,
+            isRunning: false,
+            obstacleTimer: 0,
+            obstacleFrequency: 100,
+            lastTime: 0
+        };
+        
+        function initGame() {
+            game.ctx = gameCanvas.getContext('2d');
+            highScoreElement.textContent = game.highScore;
+            
+            // Обработчики управления
+            document.addEventListener('keydown', function(e) {
+                if (e.code === 'Space' && game.isRunning) {
+                    jumpDino();
+                    e.preventDefault();
+                }
+                
+                if (e.code === 'Space' && !game.isRunning && e.target !== adminPasswordInput) {
+                    startGame();
+                    e.preventDefault();
+                }
+            });
+            
+            gameCanvas.addEventListener('click', function() {
+                if (game.isRunning) {
+                    jumpDino();
+                } else {
+                    startGame();
+                }
+            });
+            
+            startGameBtn.addEventListener('click', startGame);
+        }
+        
+        function startGame() {
+            game.isRunning = true;
+            game.dino = {
+                x: 50,
+                y: 200,
+                width: 40,
+                height: 60,
+                jumping: false,
+                jumpVelocity: 0,
+                jumpStrength: -15,
+                gravity: 0.8
+            };
+            game.obstacles = [];
+            game.score = 0;
+            game.gameSpeed = 5;
+            game.obstacleTimer = 0;
+            game.obstacleFrequency = 100;
+            scoreElement.textContent = game.score;
+            startGameBtn.textContent = "ПЕРЕЗАПУСТИТЬ ИГРУ";
+            game.lastTime = performance.now();
+            gameLoop();
+        }
+        
+        function jumpDino() {
+            if (!game.dino.jumping) {
+                game.dino.jumping = true;
+                game.dino.jumpVelocity = game.dino.jumpStrength;
+            }
+        }
+        
+        function updateDino() {
+            if (game.dino.jumping) {
+                game.dino.y += game.dino.jumpVelocity;
+                game.dino.jumpVelocity += game.dino.gravity;
+                
+                if (game.dino.y >= 200) {
+                    game.dino.y = 200;
+                    game.dino.jumping = false;
+                    game.dino.jumpVelocity = 0;
+                }
+            }
+        }
+        
+        function createObstacle() {
+            const height = 30 + Math.random() * 30;
+            const obstacle = {
+                x: gameCanvas.width,
+                y: 230 - height,
+                width: 20,
+                height: height,
+                passed: false
+            };
+            game.obstacles.push(obstacle);
+        }
+        
+        function updateObstacles() {
+            game.obstacleTimer++;
+            if (game.obstacleTimer > game.obstacleFrequency) {
+                createObstacle();
+                game.obstacleTimer = 0;
+                // Уменьшаем частоту появления препятствий со временем
+                game.obstacleFrequency = Math.max(40, 100 - game.score * 0.5);
+            }
+            
+            for (let i = game.obstacles.length - 1; i >= 0; i--) {
+                game.obstacles[i].x -= game.gameSpeed;
+                
+                // Увеличиваем счет, если динозавр прошел препятствие
+                if (!game.obstacles[i].passed && game.obstacles[i].x + game.obstacles[i].width < game.dino.x) {
+                    game.obstacles[i].passed = true;
+                    game.score++;
+                    scoreElement.textContent = game.score;
+                    
+                    // Увеличиваем скорость игры
+                    game.gameSpeed = 5 + game.score * 0.1;
+                }
+                
+                // Удаляем препятствия, которые ушли за экран
+                if (game.obstacles[i].x + game.obstacles[i].width < 0) {
+                    game.obstacles.splice(i, 1);
+                }
+            }
+        }
+        
+        function checkCollisions() {
+            for (let obstacle of game.obstacles) {
+                if (
+                    game.dino.x < obstacle.x + obstacle.width &&
+                    game.dino.x + game.dino.width > obstacle.x &&
+                    game.dino.y < obstacle.y + obstacle.height &&
+                    game.dino.y + game.dino.height > obstacle.y
+                ) {
+                    gameOver();
+                    return;
+                }
+            }
+        }
+        
+        function gameOver() {
+            game.isRunning = false;
+            startGameBtn.textContent = "ИГРАТЬ СНОВА";
+            
+            // Обновляем рекорд
+            if (game.score > game.highScore) {
+                game.highScore = game.score;
+                highScoreElement.textContent = game.highScore;
+                localStorage.setItem('dinoHighScore', game.highScore);
+            }
+        }
+        
+        function draw() {
+            // Очистка холста
+            game.ctx.fillStyle = '#0c1427';
+            game.ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+            
+            // Рисуем землю
+            game.ctx.fillStyle = '#ff9a00';
+            game.ctx.fillRect(0, 260, gameCanvas.width, 10);
+            
+            // Рисуем динозавра
+            game.ctx.fillStyle = '#4CAF50';
+            game.ctx.fillRect(game.dino.x, game.dino.y, game.dino.width, game.dino.height);
+            
+            // Глаз динозавра
+            game.ctx.fillStyle = 'white';
+            game.ctx.fillRect(game.dino.x + 30, game.dino.y + 10, 8, 8);
+            game.ctx.fillStyle = 'black';
+            game.ctx.fillRect(game.dino.x + 32, game.dino.y + 12, 4, 4);
+            
+            // Рисуем препятствия
+            game.ctx.fillStyle = '#ff5252';
+            for (let obstacle of game.obstacles) {
+                game.ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+            }
+            
+            // Рисуем счет
+            game.ctx.fillStyle = 'white';
+            game.ctx.font = '20px Arial';
+            game.ctx.fillText(`Счет: ${game.score}`, 20, 30);
+            game.ctx.fillText(`Рекорд: ${game.highScore}`, 20, 60);
+            
+            if (!game.isRunning && game.score === 0) {
+                game.ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                game.ctx.font = '24px Arial';
+                game.ctx.textAlign = 'center';
+                game.ctx.fillText('Нажмите ПРОБЕЛ или коснитесь экрана', gameCanvas.width / 2, 150);
+                game.ctx.fillText('чтобы начать игру и прыгать', gameCanvas.width / 2, 180);
+                game.ctx.textAlign = 'left';
+            }
+            
+            if (!game.isRunning && game.score > 0) {
+                game.ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                game.ctx.font = '28px Arial';
+                game.ctx.textAlign = 'center';
+                game.ctx.fillText('ИГРА ОКОНЧЕНА!', gameCanvas.width / 2, 150);
+                game.ctx.font = '20px Arial';
+                game.ctx.fillText(`Ваш счет: ${game.score}`, gameCanvas.width / 2, 180);
+                game.ctx.textAlign = 'left';
+            }
+        }
+        
+        function gameLoop(currentTime = 0) {
+            if (!game.isRunning) return;
+            
+            const deltaTime = currentTime - game.lastTime;
+            game.lastTime = currentTime;
+            
+            updateDino();
+            updateObstacles();
+            checkCollisions();
+            draw();
+            
+            requestAnimationFrame(gameLoop);
+        }
+        
+        // Обработчики событий
+        
+        // Открытие админ-панели
+        adminBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            passwordModal.style.display = 'flex';
+            adminPasswordInput.focus();
+        });
+        
+        // Проверка пароля для админ-панели
+        submitPasswordBtn.addEventListener('click', function() {
+            if (adminPasswordInput.value === ADMIN_PASSWORD) {
+                passwordModal.style.display = 'none';
+                adminModal.style.display = 'flex';
+                adminPasswordInput.value = '';
+                passwordError.style.display = 'none';
+                updateAdminStats();
+            } else {
+                passwordError.style.display = 'block';
+                adminPasswordInput.value = '';
+                adminPasswordInput.focus();
+            }
+        });
+        
+        // Ввод пароля по нажатию Enter
+        adminPasswordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitPasswordBtn.click();
+            }
+        });
+        
+        // Закрытие админ-панели
+        closeAdmin.addEventListener('click', function() {
+            adminModal.style.display = 'none';
+        });
+        
+        // Добавление нового приза
+        addPrizeBtn.addEventListener('click', function() {
+            const name = newPrizeName.value.trim();
+            const color = newPrizeColor.value;
+            
+            if (name) {
+                wheelPrizes.push({ name, color });
+                wheelChances.push(20); // Добавляем шанс для нового приза
+                
+                initWheel();
+                updatePrizesList();
+                newPrizeName.value = '';
+                saveAllData();
+                
+                alert(`Приз "${name}" добавлен в рулетку!`);
+            } else {
+                alert('Введите название приза!');
+            }
+        });
+        
+        // Удаление последнего приза
+        removeLastPrizeBtn.addEventListener('click', function() {
+            if (wheelPrizes.length > 1) {
+                const removedPrize = wheelPrizes.pop();
+                wheelChances.pop();
+                
+                initWheel();
+                updatePrizesList();
+                saveAllData();
+                
+                alert(`Приз "${removedPrize.name}" удален из рулетки!`);
+            } else {
+                alert('Нельзя удалить последний приз!');
+            }
+        });
+        
+        // Обновление количества билетов
+        updateTicketsBtn.addEventListener('click', function() {
+            const newCount = parseInt(ticketsInput.value);
+            
+            if (!isNaN(newCount) && newCount >= 0 && newCount <= 100) {
+                lotteryData.soldTickets = newCount;
+                updateLotteryInfo();
+                updateAdminStats();
+                saveAllData();
+                
+                alert(`Количество проданных билетов обновлено: ${newCount}`);
+                ticketsInput.value = '';
+            } else {
+                alert('Введите число от 0 до 100!');
+            }
+        });
+        
+        // Сброс статистики вращений
+        resetSpinsBtn.addEventListener('click', function() {
+            if (confirm('Вы уверены, что хотите сбросить статистику вращений?')) {
+                spinStats.today = 0;
+                spinStats.total = 0;
+                spinStats.todayDate = new Date().toDateString();
+                
+                updateAdminStats();
+                saveAllData();
+                
+                alert('Статистика вращений сброшена!');
+            }
+        });
+        
+        // Сброс лотереи
+        resetLotteryBtn.addEventListener('click', function() {
+            if (confirm('Вы уверены, что хотите сбросить данные лотереи? Все проданные билеты будут обнулены.')) {
+                lotteryData.soldTickets = 0;
+                updateLotteryInfo();
+                updateAdminStats();
+                saveAllData();
+                
+                alert('Данные лотереи сброшены!');
+            }
+        });
+        
+        // Экспорт данных
+        exportDataBtn.addEventListener('click', function() {
+            const data = {
+                wheelPrizes,
+                wheelChances,
+                lotteryData,
+                spinStats,
+                userData,
+                dinoHighScore: game.highScore,
+                exportDate: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `funpay-data-${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            alert('Данные экспортированы в файл JSON!');
+        });
+        
+        // Закрытие модальных окон при клике вне их
+        window.addEventListener('click', function(e) {
+            if (e.target === adminModal) {
+                adminModal.style.display = 'none';
+            }
+            if (e.target === passwordModal) {
+                passwordModal.style.display = 'none';
+                passwordError.style.display = 'none';
+                adminPasswordInput.value = '';
+            }
+        });
+        
+        // Обновляем статистику каждые 30 секунд (для демонстрации)
+        setInterval(updateAdminStats, 30000);
+    </script>
+</body>
+</html>
